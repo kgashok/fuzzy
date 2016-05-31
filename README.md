@@ -1,6 +1,6 @@
 # elmo-bracket
 
-[![Build Status](https://travis-ci.org/kgashok/vbracket.svg?branch=master)](https://travis-ci.org/kgashok/vbracket)
+[![Build Status](https://travis-ci.org/kgashok/fuzzy.svg?branch=master)](https://travis-ci.org/kgashok/fuzzy)
 
 [![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
 
