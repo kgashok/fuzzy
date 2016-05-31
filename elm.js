@@ -8086,6 +8086,233 @@ var _user$project$SStack$empty = '';
 var _user$project$Version$gitRepo = 'https://github.com/kgashok/vbracket';
 var _user$project$Version$version = 'v4.0-beta-36-ge735953';
 
+var _user$project$BracketModel$newPair = F4(
+	function (op, cl, en, id) {
+		return {opener: op, closer: cl, isEnabled: en, id: id};
+	});
+var _user$project$BracketModel$initialModel = {
+	stack: _user$project$SStack$empty,
+	isBalanced: true,
+	isValid: true,
+	expression: '',
+	bmap: _elm_lang$core$Native_List.fromArray(
+		[
+			A4(
+			_user$project$BracketModel$newPair,
+			_elm_lang$core$Native_Utils.chr('('),
+			_elm_lang$core$Native_Utils.chr(')'),
+			true,
+			1),
+			A4(
+			_user$project$BracketModel$newPair,
+			_elm_lang$core$Native_Utils.chr('{'),
+			_elm_lang$core$Native_Utils.chr('}'),
+			true,
+			2),
+			A4(
+			_user$project$BracketModel$newPair,
+			_elm_lang$core$Native_Utils.chr('<'),
+			_elm_lang$core$Native_Utils.chr('>'),
+			true,
+			3)
+		]),
+	showStack: true,
+	showBracket: true
+};
+var _user$project$BracketModel$isValid = function (bm) {
+	var _p0 = bm;
+	var expression = _p0.expression;
+	var stack = _p0.stack;
+	var isValid = _p0.isValid;
+	var isBalanced = _p0.isBalanced;
+	var _p1 = {ctor: '_Tuple2', _0: isBalanced, _1: isValid};
+	if (_p1._0 === true) {
+		if (_p1._1 === true) {
+			return ' is valid';
+		} else {
+			return ' is invalid';
+		}
+	} else {
+		return ' is imbalanced';
+	}
+};
+var _user$project$BracketModel$matchEnabledOpenrX = F2(
+	function (o, bp) {
+		return bp.isEnabled && _elm_lang$core$Native_Utils.eq(bp.opener, o);
+	});
+var _user$project$BracketModel$getClosr4 = F2(
+	function (o, bmap) {
+		return _elm_lang$core$List$head(
+			A2(
+				_elm_lang$core$List$map,
+				function (_) {
+					return _.opener;
+				},
+				A2(
+					_elm_lang$core$List$filter,
+					_user$project$BracketModel$matchEnabledOpenrX(o),
+					bmap)));
+	});
+var _user$project$BracketModel$getClosr2 = F2(
+	function (o, bmap) {
+		var getPair = function (_p2) {
+			var _p3 = _p2;
+			var _p4 = _p3.isEnabled;
+			if (_p4 === true) {
+				return {ctor: '_Tuple2', _0: _p3.opener, _1: _p3.closer};
+			} else {
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.chr(' '),
+					_1: _elm_lang$core$Native_Utils.chr(' ')
+				};
+			}
+		};
+		return A2(
+			_elm_lang$core$Dict$get,
+			o,
+			_elm_lang$core$Dict$fromList(
+				A2(_elm_lang$core$List$map, getPair, bmap)));
+	});
+var _user$project$BracketModel$matchEnabledOpenr = F2(
+	function (o, bp) {
+		var _p5 = {
+			ctor: '_Tuple2',
+			_0: bp.isEnabled,
+			_1: _elm_lang$core$Native_Utils.eq(bp.opener, o)
+		};
+		if (((_p5.ctor === '_Tuple2') && (_p5._0 === true)) && (_p5._1 === true)) {
+			return _elm_lang$core$Maybe$Just(bp.closer);
+		} else {
+			return _elm_lang$core$Maybe$Nothing;
+		}
+	});
+var _user$project$BracketModel$getClosr = F2(
+	function (o, bm) {
+		return _elm_lang$core$List$head(
+			A2(
+				_elm_lang$core$List$filterMap,
+				_user$project$BracketModel$matchEnabledOpenr(o),
+				bm));
+	});
+var _user$project$BracketModel$isClosr = F2(
+	function (c, bmap) {
+		return A2(
+			_elm_lang$core$List$member,
+			c,
+			A2(
+				_elm_lang$core$List$map,
+				function (_) {
+					return _.closer;
+				},
+				A2(
+					_elm_lang$core$List$filter,
+					function (_) {
+						return _.isEnabled;
+					},
+					bmap)));
+	});
+var _user$project$BracketModel$isOpenr = F2(
+	function (o, bmap) {
+		return A2(
+			_elm_lang$core$List$member,
+			o,
+			A2(
+				_elm_lang$core$List$map,
+				function (_) {
+					return _.opener;
+				},
+				A2(
+					_elm_lang$core$List$filter,
+					function (_) {
+						return _.isEnabled;
+					},
+					bmap)));
+	});
+var _user$project$BracketModel$updateS = F2(
+	function (s, rec) {
+		return _elm_lang$core$Native_Utils.update(
+			rec,
+			{stack: s});
+	});
+var _user$project$BracketModel$updateE = F2(
+	function (e, rec) {
+		return _elm_lang$core$Native_Utils.update(
+			rec,
+			{expression: e});
+	});
+var _user$project$BracketModel$validate = function (model) {
+	validate:
+	while (true) {
+		var _p6 = model;
+		var expression = _p6.expression;
+		var stack = _p6.stack;
+		var bmap = _p6.bmap;
+		var _p7 = _user$project$SStack$pop(expression);
+		if (_p7.ctor === 'Nothing') {
+			return _elm_lang$core$Native_Utils.update(
+				model,
+				{
+					isBalanced: _user$project$SStack$isEmpty(stack)
+				});
+		} else {
+			var _p11 = _p7._0._0;
+			var _p10 = _p7._0._1;
+			var _p8 = A2(_user$project$BracketModel$getClosr, _p11, bmap);
+			if (_p8.ctor === 'Just') {
+				var _v6 = A2(
+					_user$project$BracketModel$updateS,
+					A2(_user$project$SStack$pushC, _p8._0, stack),
+					A2(_user$project$BracketModel$updateE, _p10, model));
+				model = _v6;
+				continue validate;
+			} else {
+				if (_elm_lang$core$Native_Utils.eq(
+					A2(_user$project$BracketModel$isClosr, _p11, bmap),
+					true)) {
+					var _p9 = _user$project$SStack$pop(stack);
+					if (_p9.ctor === 'Just') {
+						if (_elm_lang$core$Native_Utils.eq(_p9._0._0, _p11)) {
+							var _v8 = A2(
+								_user$project$BracketModel$updateS,
+								_p9._0._1,
+								A2(_user$project$BracketModel$updateE, _p10, model));
+							model = _v8;
+							continue validate;
+						} else {
+							return _elm_lang$core$Native_Utils.update(
+								model,
+								{isValid: false});
+						}
+					} else {
+						return _elm_lang$core$Native_Utils.update(
+							model,
+							{isBalanced: false});
+					}
+				} else {
+					var _v9 = _elm_lang$core$Native_Utils.update(
+						model,
+						{expression: _p10});
+					model = _v9;
+					continue validate;
+				}
+			}
+		}
+	}
+};
+var _user$project$BracketModel$validateString = function (model) {
+	var res = _user$project$BracketModel$validate(model);
+	return res;
+};
+var _user$project$BracketModel$BPair = F4(
+	function (a, b, c, d) {
+		return {opener: a, closer: b, isEnabled: c, id: d};
+	});
+var _user$project$BracketModel$Model = F7(
+	function (a, b, c, d, e, f, g) {
+		return {expression: a, stack: b, bmap: c, isBalanced: d, isValid: e, showBracket: f, showStack: g};
+	});
+
 var _user$project$Bracket$bracStyle = _elm_lang$html$Html_Attributes$style(
 	_elm_lang$core$Native_List.fromArray(
 		[
@@ -8212,6 +8439,7 @@ var _user$project$Bracket$bracketHeader = function (display) {
 		_elm_lang$core$Native_List.fromArray(
 			[]));
 };
+var _user$project$Bracket$init = {ctor: '_Tuple2', _0: _user$project$BracketModel$initialModel, _1: _elm_lang$core$Platform_Cmd$none};
 var _user$project$Bracket$getIndexedCharacters = function (_p0) {
 	return A2(
 		_elm_lang$core$List$indexedMap,
@@ -8220,23 +8448,6 @@ var _user$project$Bracket$getIndexedCharacters = function (_p0) {
 				return {ctor: '_Tuple2', _0: v0, _1: v1};
 			}),
 		_elm_lang$core$String$toList(_p0));
-};
-var _user$project$Bracket$isValid = function (bm) {
-	var _p1 = bm;
-	var expression = _p1.expression;
-	var stack = _p1.stack;
-	var isValid = _p1.isValid;
-	var isBalanced = _p1.isBalanced;
-	var _p2 = {ctor: '_Tuple2', _0: isBalanced, _1: isValid};
-	if (_p2._0 === true) {
-		if (_p2._1 === true) {
-			return ' is valid';
-		} else {
-			return ' is invalid';
-		}
-	} else {
-		return ' is imbalanced';
-	}
 };
 var _user$project$Bracket$isStackEmpty = function (s) {
 	return _elm_lang$core$Native_Utils.eq(
@@ -8263,8 +8474,8 @@ var _user$project$Bracket$stackHeader = F2(
 			_elm_lang$core$Native_List.fromArray(
 				[]));
 	});
-var _user$project$Bracket$stackItem = function (_p3) {
-	var _p4 = _p3;
+var _user$project$Bracket$stackItem = function (_p1) {
+	var _p2 = _p1;
 	return A2(
 		_elm_lang$html$Html$li,
 		_elm_lang$core$Native_List.fromArray(
@@ -8280,7 +8491,7 @@ var _user$project$Bracket$stackItem = function (_p3) {
 				_elm_lang$core$Native_List.fromArray(
 					[
 						_elm_lang$html$Html$text(
-						_elm_lang$core$Basics$toString(_p4._0))
+						_elm_lang$core$Basics$toString(_p2._0))
 					])),
 				A2(
 				_elm_lang$html$Html$span,
@@ -8291,7 +8502,7 @@ var _user$project$Bracket$stackItem = function (_p3) {
 				_elm_lang$core$Native_List.fromArray(
 					[
 						_elm_lang$html$Html$text(
-						_elm_lang$core$String$fromChar(_p4._1))
+						_elm_lang$core$String$fromChar(_p2._1))
 					]))
 			]));
 };
@@ -8348,178 +8559,10 @@ var _user$project$Bracket$stackList = F2(
 						]))
 				]));
 	});
-var _user$project$Bracket$matchEnabledOpenrX = F2(
-	function (o, bp) {
-		return bp.isEnabled && _elm_lang$core$Native_Utils.eq(bp.opener, o);
-	});
-var _user$project$Bracket$getClosr4 = F2(
-	function (o, bmap) {
-		return _elm_lang$core$List$head(
-			A2(
-				_elm_lang$core$List$map,
-				function (_) {
-					return _.opener;
-				},
-				A2(
-					_elm_lang$core$List$filter,
-					_user$project$Bracket$matchEnabledOpenrX(o),
-					bmap)));
-	});
-var _user$project$Bracket$getClosr2 = F2(
-	function (o, bmap) {
-		var getPair = function (_p5) {
-			var _p6 = _p5;
-			var _p7 = _p6.isEnabled;
-			if (_p7 === true) {
-				return {ctor: '_Tuple2', _0: _p6.opener, _1: _p6.closer};
-			} else {
-				return {
-					ctor: '_Tuple2',
-					_0: _elm_lang$core$Native_Utils.chr(' '),
-					_1: _elm_lang$core$Native_Utils.chr(' ')
-				};
-			}
-		};
-		return A2(
-			_elm_lang$core$Dict$get,
-			o,
-			_elm_lang$core$Dict$fromList(
-				A2(_elm_lang$core$List$map, getPair, bmap)));
-	});
-var _user$project$Bracket$matchEnabledOpenr = F2(
-	function (o, bp) {
-		var _p8 = {
-			ctor: '_Tuple2',
-			_0: bp.isEnabled,
-			_1: _elm_lang$core$Native_Utils.eq(bp.opener, o)
-		};
-		if (((_p8.ctor === '_Tuple2') && (_p8._0 === true)) && (_p8._1 === true)) {
-			return _elm_lang$core$Maybe$Just(bp.closer);
-		} else {
-			return _elm_lang$core$Maybe$Nothing;
-		}
-	});
-var _user$project$Bracket$getClosr = F2(
-	function (o, bm) {
-		return _elm_lang$core$List$head(
-			A2(
-				_elm_lang$core$List$filterMap,
-				_user$project$Bracket$matchEnabledOpenr(o),
-				bm));
-	});
-var _user$project$Bracket$isClosr = F2(
-	function (c, bmap) {
-		return A2(
-			_elm_lang$core$List$member,
-			c,
-			A2(
-				_elm_lang$core$List$map,
-				function (_) {
-					return _.closer;
-				},
-				A2(
-					_elm_lang$core$List$filter,
-					function (_) {
-						return _.isEnabled;
-					},
-					bmap)));
-	});
-var _user$project$Bracket$isOpenr = F2(
-	function (o, bmap) {
-		return A2(
-			_elm_lang$core$List$member,
-			o,
-			A2(
-				_elm_lang$core$List$map,
-				function (_) {
-					return _.opener;
-				},
-				A2(
-					_elm_lang$core$List$filter,
-					function (_) {
-						return _.isEnabled;
-					},
-					bmap)));
-	});
-var _user$project$Bracket$updateS = F2(
-	function (s, rec) {
-		return _elm_lang$core$Native_Utils.update(
-			rec,
-			{stack: s});
-	});
-var _user$project$Bracket$updateE = F2(
-	function (e, rec) {
-		return _elm_lang$core$Native_Utils.update(
-			rec,
-			{expression: e});
-	});
-var _user$project$Bracket$validate = function (model) {
-	validate:
-	while (true) {
-		var _p9 = model;
-		var expression = _p9.expression;
-		var stack = _p9.stack;
-		var bmap = _p9.bmap;
-		var _p10 = _user$project$SStack$pop(expression);
-		if (_p10.ctor === 'Nothing') {
-			return _elm_lang$core$Native_Utils.update(
-				model,
-				{
-					isBalanced: _user$project$SStack$isEmpty(stack)
-				});
-		} else {
-			var _p14 = _p10._0._0;
-			var _p13 = _p10._0._1;
-			var _p11 = A2(_user$project$Bracket$getClosr, _p14, bmap);
-			if (_p11.ctor === 'Just') {
-				var _v7 = A2(
-					_user$project$Bracket$updateS,
-					A2(_user$project$SStack$pushC, _p11._0, stack),
-					A2(_user$project$Bracket$updateE, _p13, model));
-				model = _v7;
-				continue validate;
-			} else {
-				if (_elm_lang$core$Native_Utils.eq(
-					A2(_user$project$Bracket$isClosr, _p14, bmap),
-					true)) {
-					var _p12 = _user$project$SStack$pop(stack);
-					if (_p12.ctor === 'Just') {
-						if (_elm_lang$core$Native_Utils.eq(_p12._0._0, _p14)) {
-							var _v9 = A2(
-								_user$project$Bracket$updateS,
-								_p12._0._1,
-								A2(_user$project$Bracket$updateE, _p13, model));
-							model = _v9;
-							continue validate;
-						} else {
-							return _elm_lang$core$Native_Utils.update(
-								model,
-								{isValid: false});
-						}
-					} else {
-						return _elm_lang$core$Native_Utils.update(
-							model,
-							{isBalanced: false});
-					}
-				} else {
-					var _v10 = _elm_lang$core$Native_Utils.update(
-						model,
-						{expression: _p13});
-					model = _v10;
-					continue validate;
-				}
-			}
-		}
-	}
-};
-var _user$project$Bracket$validateString = function (model) {
-	var res = _user$project$Bracket$validate(model);
-	return res;
-};
 var _user$project$Bracket$update = F2(
 	function (msg, model) {
-		var _p15 = msg;
-		switch (_p15.ctor) {
+		var _p3 = msg;
+		switch (_p3.ctor) {
 			case 'NoOp':
 				return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
 			case 'UpdateExpression':
@@ -8527,12 +8570,12 @@ var _user$project$Bracket$update = F2(
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
-						{expression: _p15._0}),
+						{expression: _p3._0}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 			case 'Mark':
 				var updateEntry = function (e) {
-					return _elm_lang$core$Native_Utils.eq(e.id, _p15._0) ? _elm_lang$core$Native_Utils.update(
+					return _elm_lang$core$Native_Utils.eq(e.id, _p3._0) ? _elm_lang$core$Native_Utils.update(
 						e,
 						{
 							isEnabled: _elm_lang$core$Basics$not(e.isEnabled)
@@ -8548,12 +8591,12 @@ var _user$project$Bracket$update = F2(
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 			case 'MouseMsg':
-				var _p16 = _p15._0;
-				var x = _p16.x;
-				var y = _p16.y;
+				var _p4 = _p3._0;
+				var x = _p4.x;
+				var y = _p4.y;
 				var onHeader = (_elm_lang$core$Native_Utils.cmp(x, 800) < 0) && (_elm_lang$core$Native_Utils.cmp(y, 60) < 0);
-				var _p17 = onHeader;
-				if (_p17 === true) {
+				var _p5 = onHeader;
+				if (_p5 === true) {
 					return {
 						ctor: '_Tuple2',
 						_0: _elm_lang$core$Native_Utils.update(
@@ -8568,8 +8611,8 @@ var _user$project$Bracket$update = F2(
 					return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
 				}
 			default:
-				var _p18 = _p15._0;
-				switch (_p18) {
+				var _p6 = _p3._0;
+				switch (_p6) {
 					case 2:
 						return {
 							ctor: '_Tuple2',
@@ -8594,48 +8637,6 @@ var _user$project$Bracket$update = F2(
 						return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
 				}
 		}
-	});
-var _user$project$Bracket$newPair = F4(
-	function (op, cl, en, id) {
-		return {opener: op, closer: cl, isEnabled: en, id: id};
-	});
-var _user$project$Bracket$initialModel = {
-	stack: _user$project$SStack$empty,
-	isBalanced: true,
-	isValid: true,
-	expression: '',
-	bmap: _elm_lang$core$Native_List.fromArray(
-		[
-			A4(
-			_user$project$Bracket$newPair,
-			_elm_lang$core$Native_Utils.chr('('),
-			_elm_lang$core$Native_Utils.chr(')'),
-			true,
-			1),
-			A4(
-			_user$project$Bracket$newPair,
-			_elm_lang$core$Native_Utils.chr('{'),
-			_elm_lang$core$Native_Utils.chr('}'),
-			true,
-			2),
-			A4(
-			_user$project$Bracket$newPair,
-			_elm_lang$core$Native_Utils.chr('<'),
-			_elm_lang$core$Native_Utils.chr('>'),
-			true,
-			3)
-		]),
-	showStack: true,
-	showBracket: true
-};
-var _user$project$Bracket$init = {ctor: '_Tuple2', _0: _user$project$Bracket$initialModel, _1: _elm_lang$core$Platform_Cmd$none};
-var _user$project$Bracket$BPair = F4(
-	function (a, b, c, d) {
-		return {opener: a, closer: b, isEnabled: c, id: d};
-	});
-var _user$project$Bracket$Model = F7(
-	function (a, b, c, d, e, f, g) {
-		return {expression: a, stack: b, bmap: c, isBalanced: d, isValid: e, showBracket: f, showStack: g};
 	});
 var _user$project$Bracket$KeyMsg = function (a) {
 	return {ctor: 'KeyMsg', _0: a};
@@ -8707,7 +8708,7 @@ var _user$project$Bracket$UpdateExpression = function (a) {
 	return {ctor: 'UpdateExpression', _0: a};
 };
 var _user$project$Bracket$entryForm = function (model) {
-	var res = _user$project$Bracket$validateString(model);
+	var res = _user$project$BracketModel$validateString(model);
 	return A2(
 		_elm_lang$html$Html$div,
 		_elm_lang$core$Native_List.fromArray(
@@ -8738,7 +8739,7 @@ var _user$project$Bracket$entryForm = function (model) {
 						A2(
 							_elm_lang$core$Basics_ops['++'],
 							model.expression,
-							_user$project$Bracket$isValid(res)))
+							_user$project$BracketModel$isValid(res)))
 					])),
 				A2(_user$project$Bracket$stackHeader, model.showStack, res.stack),
 				A2(_user$project$Bracket$stackList, model.showStack, res.stack)
