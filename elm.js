@@ -8083,8 +8083,8 @@ var _user$project$SStack$pushC = F2(
 	});
 var _user$project$SStack$empty = '';
 
-var _user$project$Version$gitRepo = 'http://github.com/kgashok/fuzzy';
-var _user$project$Version$version = 'v5.0-beta-6-gccc8a21';
+var _user$project$Version$gitRepo = 'https://github.com/kgashok/fuzzy';
+var _user$project$Version$version = 'v5.0-beta-15-g43ee3ec';
 
 var _user$project$BracketModel$newPair = F4(
 	function (op, cl, en, id) {
