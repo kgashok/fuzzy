@@ -11,7 +11,8 @@
   </body>
 
   <script type="text/javascript">
-    var app = Elm.Bracket.fullscreen();
+    var target = document.querySelector('.js-elm');
+    Elm.embed(Elm.Bracket, target, {}); 
   </script>
 
 </html>
