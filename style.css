@@ -188,10 +188,11 @@ li {
 }
 
 li:hover {
-  background: #fcfcfc;
+  /*background: #fcfcfc;*/
   /* background: #61a1bc; */
   box-shadow: 0 3px 6px rgba(0,0,0,0.2);
   cursor: pointer;
+  background: yellow
 }
 
 li.total {
