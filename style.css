@@ -96,6 +96,7 @@ button.add {
 
 button.add:hover {
   opacity: 0.75;
+  color: yellow;
 }
 
 button.delete {
