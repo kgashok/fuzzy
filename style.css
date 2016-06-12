@@ -75,6 +75,7 @@ button.sort {
 
 button.sort:hover {
   opacity: 0.75;
+  color: yellow
 }
 
 button.add {

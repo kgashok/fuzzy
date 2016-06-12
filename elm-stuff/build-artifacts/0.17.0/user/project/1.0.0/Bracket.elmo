@@ -125,42 +125,8 @@ var _user$project$Bracket$bracketHeader = function (display) {
 			[]));
 };
 var _user$project$Bracket$init = {ctor: '_Tuple2', _0: _user$project$BracketModel$initialModel, _1: _elm_lang$core$Platform_Cmd$none};
-var _user$project$Bracket$getIndexedCharacters = function (_p0) {
-	return A2(
-		_elm_lang$core$List$indexedMap,
-		F2(
-			function (v0, v1) {
-				return {ctor: '_Tuple2', _0: v0, _1: v1};
-			}),
-		_elm_lang$core$String$toList(_p0));
-};
-var _user$project$Bracket$isStackEmpty = function (s) {
-	return _elm_lang$core$Native_Utils.eq(
-		_elm_lang$core$String$length(s),
-		0) ? 'Empty' : '';
-};
-var _user$project$Bracket$stackHeader = F2(
-	function (display, stack) {
-		return display ? A2(
-			_elm_lang$html$Html$h3,
-			_elm_lang$core$Native_List.fromArray(
-				[]),
-			_elm_lang$core$Native_List.fromArray(
-				[
-					_elm_lang$html$Html$text(
-					A2(
-						_elm_lang$core$Basics_ops['++'],
-						'Stack ',
-						_user$project$Bracket$isStackEmpty(stack)))
-				])) : A2(
-			_elm_lang$html$Html$h3,
-			_elm_lang$core$Native_List.fromArray(
-				[]),
-			_elm_lang$core$Native_List.fromArray(
-				[]));
-	});
-var _user$project$Bracket$stackItem = function (_p1) {
-	var _p2 = _p1;
+var _user$project$Bracket$stackItem = function (_p0) {
+	var _p1 = _p0;
 	return A2(
 		_elm_lang$html$Html$li,
 		_elm_lang$core$Native_List.fromArray(
@@ -176,7 +142,7 @@ var _user$project$Bracket$stackItem = function (_p1) {
 				_elm_lang$core$Native_List.fromArray(
 					[
 						_elm_lang$html$Html$text(
-						_elm_lang$core$Basics$toString(_p2._0))
+						_elm_lang$core$Basics$toString(_p1._0))
 					])),
 				A2(
 				_elm_lang$html$Html$span,
@@ -187,9 +153,18 @@ var _user$project$Bracket$stackItem = function (_p1) {
 				_elm_lang$core$Native_List.fromArray(
 					[
 						_elm_lang$html$Html$text(
-						_elm_lang$core$String$fromChar(_p2._1))
+						_elm_lang$core$String$fromChar(_p1._1))
 					]))
 			]));
+};
+var _user$project$Bracket$getIndexedCharacters = function (_p2) {
+	return A2(
+		_elm_lang$core$List$indexedMap,
+		F2(
+			function (v0, v1) {
+				return {ctor: '_Tuple2', _0: v0, _1: v1};
+			}),
+		_elm_lang$core$String$toList(_p2));
 };
 var _user$project$Bracket$stackList = F2(
 	function (display, stack) {
@@ -243,6 +218,31 @@ var _user$project$Bracket$stackList = F2(
 								]))
 						]))
 				]));
+	});
+var _user$project$Bracket$isStackEmpty = function (s) {
+	return _elm_lang$core$Native_Utils.eq(
+		_elm_lang$core$String$length(s),
+		0) ? 'Empty' : '';
+};
+var _user$project$Bracket$stackHeader = F2(
+	function (display, stack) {
+		return display ? A2(
+			_elm_lang$html$Html$h3,
+			_elm_lang$core$Native_List.fromArray(
+				[]),
+			_elm_lang$core$Native_List.fromArray(
+				[
+					_elm_lang$html$Html$text(
+					A2(
+						_elm_lang$core$Basics_ops['++'],
+						'Stack ',
+						_user$project$Bracket$isStackEmpty(stack)))
+				])) : A2(
+			_elm_lang$html$Html$h3,
+			_elm_lang$core$Native_List.fromArray(
+				[]),
+			_elm_lang$core$Native_List.fromArray(
+				[]));
 	});
 var _user$project$Bracket$update = F2(
 	function (msg, model) {

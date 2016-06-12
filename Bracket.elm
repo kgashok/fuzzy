@@ -75,17 +75,6 @@ update msg model =
 -- VIEW 
 
 
-stackItem : (Int, Char) -> Html Msg
-stackItem (index, token) = 
-  li []
-    --[ classList [ ("highlight", entry.isEnabled) ],
-    --  onClick address (Mark entry.id)
-    --]
-    [ span [ class "index" ] [ text (toString index) ],
-      span [ class "token" ] [ text (String.fromChar token) ]
-      -- span [][text "   - closer"] 
-      -- button [ class "delete", onClick address (Delete entry.id) ] []
-    ]
 
 
 entryItem : BPair -> Html Msg
@@ -136,6 +125,20 @@ isStackEmpty s =
 getIndexedCharacters : String -> List (Int, Char)
 getIndexedCharacters =
   List.indexedMap (,) << String.toList
+
+
+stackItem : (Int, Char) -> Html Msg
+stackItem (index, token) = 
+  li []
+    --[ classList [ ("highlight", entry.isEnabled) ],
+    --  onClick address (Mark entry.id)
+    --]
+    [ span [ class "index" ] [ text (toString index) ],
+      span [ class "token" ] [ text (String.fromChar token) ]
+      -- span [][text "   - closer"] 
+      -- button [ class "delete", onClick address (Delete entry.id) ] []
+    ]
+
 
 stackList : Bool -> SStack -> Html Msg
 stackList display stack = 
