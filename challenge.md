@@ -1,6 +1,8 @@
 ### The Elmo-Bracket Challenge 
 ![Elmo](https://s-media-cache-ak0.pinimg.com/736x/e2/1e/1a/e21e1aae68defaefe5d35216740586df.jpg) 
 
+UPDATE: 
+
 The latest Bracket Validator is now updated at http://bracket.kgisl.com 
 
 1. The stack object grows interactively as it handles brackets in the input string
