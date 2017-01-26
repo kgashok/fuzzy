@@ -5,7 +5,7 @@ import Html.Events exposing (on, onInput, targetValue, onClick)
 import Html.Attributes exposing (..)
 -- import Signal exposing (Address)
 -- import StartApp.Simple as StartApp
-import Html.App as Html
+import Html as Html
 
 import String exposing (..)
 
@@ -75,6 +75,17 @@ update msg model =
 -- VIEW 
 
 
+stackItem : (Int, Char) -> Html Msg
+stackItem (index, token) = 
+  li []
+    --[ classList [ ("highlight", entry.isEnabled) ],
+    --  onClick address (Mark entry.id)
+    --]
+    [ span [ class "index" ] [ text (toString index) ],
+      span [ class "token" ] [ text (String.fromChar token) ]
+      -- span [][text "   - closer"] 
+      -- button [ class "delete", onClick address (Delete entry.id) ] []
+    ]
 
 
 entryItem : BPair -> Html Msg
@@ -96,7 +107,7 @@ entryForm model =
   in
     div [ ] -- id "first" ]
       [ input
-          [ type' "text",
+          [ type_ "text",
             placeholder "{( () )}",
             value model.expression,
             name "phrase",
@@ -126,20 +137,6 @@ getIndexedCharacters : String -> List (Int, Char)
 getIndexedCharacters =
   List.indexedMap (,) << String.toList
 
-
-stackItem : (Int, Char) -> Html Msg
-stackItem (index, token) = 
-  li []
-    --[ classList [ ("highlight", entry.isEnabled) ],
-    --  onClick address (Mark entry.id)
-    --]
-    [ span [ class "index" ] [ text (toString index) ],
-      span [ class "token" ] [ text (String.fromChar token) ]
-      -- span [][text "   - closer"] 
-      -- button [ class "delete", onClick address (Delete entry.id) ] []
-    ]
-
-
 stackList : Bool -> SStack -> Html Msg
 stackList display stack = 
   let
@@ -156,12 +153,7 @@ stackList display stack =
   in
     div [ ] 
     [
-      ul [ ] items,
-      footer
-        [ ] [a [href (gitRepo ++ "/issues/new"), 
-                target "_blank", 
-                rel "noopener noreferrer"] 
-            [text version] ]
+      ul [ ] items
     ]
 
 entryList : Bool -> List BPair -> Html Msg
@@ -210,7 +202,7 @@ subscriptions model =
     , Keyboard.presses KeyMsg
     ]
 
-main : Program Never
+main : Program Never Model Msg
 main =
   Html.program
     { init = init, update = update, view = view, subscriptions = subscriptions}
@@ -229,7 +221,16 @@ title message times =
 
 pageHeader : Html Msg
 pageHeader =
-  h1 [ ] [ title "Validator" 1 ]
+  div [] 
+    [ h1 [ ] [ title "Validator" 1 ]
+    , footer
+         [ ] [a [href (gitRepo ++ "/issues/new"), 
+                target "_blank", 
+                rel "noopener noreferrer"] 
+             [text version] ]
+    , br [] []
+    ]
+
 
 
 bracketHeader : Bool -> Html Msg
