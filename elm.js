@@ -9276,8 +9276,8 @@ var _user$project$BracketModel$initialModel = {
 					ctor: '::',
 					_0: A4(
 						_user$project$BracketModel$newPair,
-						_elm_lang$core$Native_Utils.chr('<'),
-						_elm_lang$core$Native_Utils.chr('>'),
+						_elm_lang$core$Native_Utils.chr('['),
+						_elm_lang$core$Native_Utils.chr(']'),
 						true,
 						4),
 					_1: {ctor: '[]'}

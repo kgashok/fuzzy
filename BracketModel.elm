@@ -182,7 +182,7 @@ initialModel =
         newPair '(' ')' True 1,
         newPair '{' '}' True 2, 
         newPair '<' '>' True 3,
-        newPair '<' '>' True 4
+        newPair '[' ']' True 4
       ], 
     showStack = True,
     showBracket = True
