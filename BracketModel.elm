@@ -171,18 +171,18 @@ newPair op cl en id =
 
 initialModel : Model
 initialModel =
-  { stack      = Stack.empty,
-    isBalanced = True, 
-    isValid    = True,
+  { stack      = Stack.empty
+  , isBalanced = True 
+  , isValid    = True
     
-    expression = "", 
+  , expression = "" 
     
-    bmap = 
-      [
-        newPair '(' ')' True 1,
-        newPair '{' '}' True 2, 
-        newPair '<' '>' True 3
-      ], 
-    showStack = True,
-    showBracket = True
+  , bmap = 
+      [ newPair '(' ')' True 1
+      , newPair '{' '}' True 2 
+      , newPair '<' '>' True 3 
+      , newPair '[' ']' True 4
+      ]
+  , showStack = True
+  , showBracket = True
   }
