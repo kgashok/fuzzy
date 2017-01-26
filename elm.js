@@ -9237,7 +9237,7 @@ var _user$project$SStack$pushC = F2(
 var _user$project$SStack$empty = '';
 
 var _user$project$Version$gitRepo = 'https://github.com/kgashok/fuzzy';
-var _user$project$Version$version = 'v5.0-beta-13-g7051701';
+var _user$project$Version$version = 'v5.0-beta-17-gd1d98c2';
 
 var _user$project$BracketModel$newPair = F4(
 	function (op, cl, en, id) {
